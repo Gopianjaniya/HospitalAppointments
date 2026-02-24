@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import HospitalContext from "../context/HospitalContext";
+import {HospitalContext} from "../context/HospitalContext";
 
 export default function Patients() {
   const [patients, setPatients] = useState([]);
