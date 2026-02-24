@@ -9,7 +9,12 @@ dotenv.config();
 connectDB();
 export const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://hospital-frontend-henna.vercel.app",
+    credentials: true,
+  }),
+);
 app.use("/api/user", userRouter);
 app.use("/api/appointment", appointmentRouter);
 
@@ -17,4 +22,5 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello, api working</h1>");
 });
 
-app.listen(3000, () => console.log("Server start  on port 3000"));
+// app.listen(3000, () => console.log("Server start  on port 3000"));
+ export default app;
