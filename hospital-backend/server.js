@@ -33,5 +33,5 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello, api working</h1>");
 });
 
-app.listen(3000, () => console.log("Server start  on port 3000"));
+// app.listen(3000, () => console.log("Server start  on port 3000"));
  export default app;
