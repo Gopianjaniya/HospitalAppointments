@@ -29,7 +29,6 @@ function Dashboard() {
           ? app.doctor?._id === currentUser.id
           : app.patient?._id === currentUser.id,
       );
-      console.log(filtered, "filtered");
 
       setAppointments(filtered);
     } catch (err) {
