@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import axios from "axios";
-import HospitalContext from "../context/hospitalContext";
+import HospitalContext from "../context/HospitalContext";
 
 function Login() {
   const [username, setUsername] = useState("");

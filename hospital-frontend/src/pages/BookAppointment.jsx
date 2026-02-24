@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import HospitalContext from "../context/hospitalContext";
+import HospitalContext from "../context/HospitalContext";
 
 function BookAppointment() {
   const [doctorId, setDoctorId] = useState("");

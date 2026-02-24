@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import HospitalContext  from "../context/hospitalContext.jsx";
+import HospitalContext  from "../context/HospitalContext";
 
 function Appointments() {
   const [appointments, setAppointments] = useState([]);

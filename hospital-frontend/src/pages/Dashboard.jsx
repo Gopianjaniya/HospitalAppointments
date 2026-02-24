@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import HospitalContext from "../context/hospitalContext";
+import HospitalContext from "../context/HospitalContext";
 
 function Dashboard() {
   const { navigate, backendUrl } = useContext(HospitalContext);
