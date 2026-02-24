@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { hostContext } from "../context/hospitalContext.jsx";
+import HospitalContext from "../context/hospitalContext";
 
 export default function Doctors() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { backendUrl, navigate } = useContext(hostContext);
+  const { backendUrl, navigate } = useContext(HospitalContext);
 
   useEffect(() => {
     const fetchDoctors = async () => {

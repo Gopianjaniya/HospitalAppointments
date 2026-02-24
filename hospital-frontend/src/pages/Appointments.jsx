@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { hostContext } from "../context/hospitalContext.jsx";
+import HospitalContext  from "../context/hospitalContext.jsx";
 
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { backendUrl, navigate } = useContext(hostContext);
+  const { backendUrl, navigate } = useContext(HospitalContext);
   const user = JSON.parse(localStorage.getItem("user"));
 
   const fetchAppointments = async () => {

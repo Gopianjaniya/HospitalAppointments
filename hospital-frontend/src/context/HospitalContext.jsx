@@ -1,17 +1,17 @@
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const hostContext = createContext();
-export default function HospitalContext({ children }) {
+export const HospitalContext = createContext();
+export default function HospitalContextProvider({ children }) {
   const navigate = useNavigate();
-  const backendUrl = "http://localhost:3000";
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const value = {
     backendUrl,
     navigate,
   };
   return (
     <>
-      <hostContext.Provider value={value}>{children}</hostContext.Provider>
+      <HospitalContext.Provider value={value}>{children}</HospitalContext.Provider>
     </>
   );
 }

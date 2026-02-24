@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import { hostContext } from "../context/hospitalContext.jsx";
+import HospitalContext from "../context/hospitalContext";
 
 function Dashboard() {
-  const { navigate, backendUrl } = useContext(hostContext);
+  const { navigate, backendUrl } = useContext(HospitalContext);
   const [appointments, setAppointments] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

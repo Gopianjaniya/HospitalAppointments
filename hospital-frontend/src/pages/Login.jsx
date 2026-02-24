@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 import axios from "axios";
-import { hostContext } from "../context/hospitalContext.jsx";
+import HospitalContext from "../context/hospitalContext";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { navigate, backendUrl } = useContext(hostContext);
+  const { navigate, backendUrl } = useContext(HospitalContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import { hostContext } from "../context/hospitalContext.jsx";
+import HospitalContext from "../context/hospitalContext";
 
 function BookAppointment() {
   const [doctorId, setDoctorId] = useState("");
@@ -8,7 +8,7 @@ function BookAppointment() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState(false);
-  const { backendUrl, navigate } = useContext(hostContext);
+  const { backendUrl, navigate } = useContext(HospitalContext);
 
   useEffect(() => {
     const fetchDoctors = async () => {

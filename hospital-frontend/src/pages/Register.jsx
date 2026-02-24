@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useState } from "react";
-import { hostContext } from "../context/hospitalContext.jsx";
+import HospitalContext from "../context/hospitalContext";
 
 function Register() {
   const [name, setName] = useState("");
@@ -9,7 +9,7 @@ function Register() {
   const [role, setRole] = useState("patient");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { navigate, backendUrl } = useContext(hostContext);
+  const { navigate, backendUrl } = useContext(HospitalContext);
 
   const handleRegister = async (e) => {
     e.preventDefault();
