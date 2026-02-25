@@ -22,7 +22,7 @@ function Navbar() {
 
           <Link
             to="/dashboard"
-            className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+            className="text-xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
           >
             CareSync
           </Link>
@@ -58,7 +58,7 @@ function Navbar() {
           {user ? (
             <button
               onClick={logout}
-              className="text-red-500 text-sm font-medium"
+              className="text-red-500 text-sm font-medium border rounded-xl px-4 py-1 hover:bg-red-100"
             >
               Logout
             </button>
