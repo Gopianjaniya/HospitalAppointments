@@ -83,7 +83,7 @@ function Appointments() {
           {user?.role === "patient" && (
             <button
               onClick={() => navigate("/book")}
-              className="bg-primary text-white px-10 py-4 rounded-xl font-bold hover:bg-primary-hover transition-all shadow-lg shadow-primary/20"
+              className="bg-primary text-blue-700 px-10 py-4 rounded-xl font-bold hover:bg-primary-hover transition-all shadow-lg shadow-primary/20"
             >
               Book Appointment Now
             </button>

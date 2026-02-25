@@ -3,7 +3,7 @@ import { useState } from "react";
 
 function Navbar() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user") || "null");
   const [isOpen, setIsOpen] = useState(false);
 
   const logout = () => {
@@ -36,24 +36,50 @@ function Navbar() {
           >
             Dashboard
           </Link>
-          <Link
-            to="/doctors"
-            className="text-sm font-medium text-gray-600 hover:text-blue-600"
-          >
-            Doctors
-          </Link>
-          <Link
-            to="/patients"
-            className="text-sm font-medium text-gray-600 hover:text-blue-600"
-          >
-            Patients
-          </Link>
+
+          {/* Doctors visible to patient */}
+          {user?.role === "patient" && (
+            <Link
+              to="/doctors"
+              className="text-sm font-medium text-gray-600 hover:text-blue-600"
+            >
+              Doctors
+            </Link>
+          )}
+
+          {/* Patients visible to doctor */}
+          {user?.role === "doctor" && (
+            <Link
+              to="/patients"
+              className="text-sm font-medium text-gray-600 hover:text-blue-600"
+            >
+              Patients
+            </Link>
+          )}
+
           <Link
             to="/appointments"
             className="text-sm font-medium text-gray-600 hover:text-blue-600"
           >
             Schedule
           </Link>
+
+          {/* Profile Section */}
+          {user && (
+            <div className="flex items-center gap-3 bg-gray-100 px-3 py-1 rounded-xl">
+              <div className="w-8 h-8 bg-blue-600 text-white flex items-center justify-center rounded-full text-sm font-bold">
+                {user.name?.charAt(0).toUpperCase()}
+              </div>
+              <div className="flex flex-col leading-tight">
+                <span className="text-sm font-medium text-gray-700">
+                  {user.name}
+                </span>
+                <span className="text-xs text-gray-500 capitalize">
+                  {user.role}
+                </span>
+              </div>
+            </div>
+          )}
 
           {user ? (
             <button
@@ -87,18 +113,40 @@ function Navbar() {
           <Link to="/dashboard" onClick={() => setIsOpen(false)}>
             Dashboard
           </Link>
-          <Link to="/doctors" onClick={() => setIsOpen(false)}>
-            Doctors
-          </Link>
-          <Link to="/patients" onClick={() => setIsOpen(false)}>
-            Patients
-          </Link>
+
+          {user?.role === "patient" && (
+            <Link to="/doctors" onClick={() => setIsOpen(false)}>
+              Doctors
+            </Link>
+          )}
+
+          {user?.role === "doctor" && (
+            <Link to="/patients" onClick={() => setIsOpen(false)}>
+              Patients
+            </Link>
+          )}
+
           <Link to="/appointments" onClick={() => setIsOpen(false)}>
             Schedule
           </Link>
 
+          {/* Mobile Profile */}
+          {user && (
+            <div className="flex items-center gap-3 mt-2">
+              <div className="w-8 h-8 bg-blue-600 text-white flex items-center justify-center rounded-full text-sm font-bold">
+                {user.name?.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <div className="text-sm font-medium">{user.name}</div>
+                <div className="text-xs text-gray-500 capitalize">
+                  {user.role}
+                </div>
+              </div>
+            </div>
+          )}
+
           {user ? (
-            <button onClick={logout} className="text-left text-red-500">
+            <button onClick={logout} className="text-left text-red-500 mt-2">
               Logout
             </button>
           ) : (

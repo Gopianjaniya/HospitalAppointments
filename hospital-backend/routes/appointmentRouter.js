@@ -5,9 +5,10 @@ import {
   appointmentCancelController,
   getAllAppointments,
 } from "../controller/appointmentController.js";
+import { authMiddleware } from "../middlerware/authMiddleware.js";
 
 
 // ------- appointment
-appointmentRouter.post('/book',appointmentBookController)
-appointmentRouter.put('/cancel/:id',appointmentCancelController)
-appointmentRouter.get('/',getAllAppointments)
+appointmentRouter.post("/book", authMiddleware,appointmentBookController);
+appointmentRouter.put("/cancel/:id", authMiddleware,appointmentCancelController);
+appointmentRouter.get("/", authMiddleware,getAllAppointments);
