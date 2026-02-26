@@ -30,7 +30,7 @@ export default function Patients() {
         </header>
 
         <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
-          <table className="w-full text-sm">
+          <table className="w-0 sm:w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
                 <th className="px-6 py-3 text-left font-medium text-gray-600">
