@@ -17,9 +17,11 @@ export const registerController = async (req, res) => {
         .status(401)
         .json({ success: false, message: "User not Created" });
     }
-    return res
-      .status(201)
-      .json({ success: true, message: "User Created Successfully", user: newUser });
+    return res.status(201).json({
+      success: true,
+      message: "User Created Successfully",
+      user: newUser,
+    });
   } catch (error) {
     console.error("Registration error:", error);
     return res.status(400).json({ error: error.message });
@@ -28,19 +30,15 @@ export const registerController = async (req, res) => {
 
 // ----------- Login
 export const loginController = async (req, res) => {
-  
-  console.log("Login function called");
   try {
     const { username, password } = req.body;
-    console.log(username,password,"username,password");
-    
+
     const user = await userModel.findOne({ username });
     if (!user) return res.status(404).json({ message: "User not found" });
     const isMatch = await comparePassword(password, user.password);
     if (!isMatch) return res.status(401).json({ message: "Invalid password" });
- 
-    const token = await createToken(user._id);     
-    
+
+    const token = await createToken(user._id);
 
     res.status(200).json({
       success: true,
@@ -61,12 +59,14 @@ export const loginController = async (req, res) => {
 // -------- Get All doctors
 export const getAllDoctors = async (req, res) => {
   try {
-    const doctors = await userModel.find({ role: "doctor" }).select("-password");
-    
-    res.status(200).json({ 
-      success: true, 
-      message: doctors.length > 0 ? "get doctors" : "No doctors found", 
-      doctors: doctors || [] 
+    const doctors = await userModel
+      .find({ role: "doctor" })
+      .select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: doctors.length > 0 ? "get doctors" : "No doctors found",
+      doctors: doctors || [],
     });
   } catch (error) {
     return res.status(400).json({ error: error.message });
@@ -79,13 +79,12 @@ export const getAllPatient = async (req, res) => {
     const patients = await userModel
       .find({ role: "patient" })
       .select("-password");
-    res.status(200).json({ 
-      success: true, 
-      message: patients.length > 0 ? "get patients" : "No patients found", 
-      patients: patients || [] 
+    res.status(200).json({
+      success: true,
+      message: patients.length > 0 ? "get patients" : "No patients found",
+      patients: patients || [],
     });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
-

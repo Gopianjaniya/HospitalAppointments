@@ -13,8 +13,6 @@ export default function HospitalContextProvider({ children }) {
   );
 
   const login = (newToken, newUser) => {
-    console.log(newToken,"-----------");
-    
     setToken(newToken);
     setUser(newUser);
     localStorage.setItem("token", newToken);

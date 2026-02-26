@@ -3,7 +3,6 @@ import axios from "axios";
 const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
 });
-console.log("----------------");
 
 // Add a request interceptor to inject the token
 api.interceptors.request.use(
@@ -29,7 +28,7 @@ api.interceptors.response.use(
         url: error.config.url,
         message: error.response.data.message,
         error: error.response.data.error,
-        headers: error.config.headers
+        headers: error.config.headers,
       });
     }
     return Promise.reject(error);
