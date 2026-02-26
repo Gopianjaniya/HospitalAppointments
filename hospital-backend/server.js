@@ -1,10 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import { connectDB } from "./config/config.db.js";
 import { userRouter } from "./routes/userRouter.js";
 import { appointmentRouter } from "./routes/appointmentRouter.js";
-dotenv.config();
 
 connectDB();
 export const app = express();
@@ -34,4 +35,4 @@ app.get("/", (req, res) => {
 });
 
 // app.listen(3000, () => console.log("Server start  on port 3000"));
- export default app;
+export default app;

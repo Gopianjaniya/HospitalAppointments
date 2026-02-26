@@ -1,26 +1,32 @@
 import { useContext, useState } from "react";
-import axios from "axios";
 import { HospitalContext } from "../context/HospitalContext";
+ 
+import api from "../utils/api";
+import axios from "axios";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { navigate, backendUrl } = useContext(HospitalContext);
+  const { navigate, login ,backendUrl} = useContext(HospitalContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
+    
+     console.log("Sending request...");
+
     try {
-      const res = await axios.post(`${backendUrl}/api/user/login`, {
+      const res = await api.post("/api/user/login", {
+      // const res = await axios.post(backendUrl+"/api/user/login", {
         username,
         password,
       });
-
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+       console.log("Response:", res.data);
+      
+      login(res.data.token, res.data.user);
       navigate("/dashboard");
     } catch (err) {
       console.error(err);

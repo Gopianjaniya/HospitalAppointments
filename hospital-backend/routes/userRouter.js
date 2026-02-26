@@ -6,10 +6,13 @@ import {
   registerController,
 } from "../controller/userController.js";
 
+import { authMiddleware } from "../middlerware/authMiddleware.js";
+import { isDoctor } from "../middlerware/roleMiddleware.js";
+
 export const userRouter = express.Router();
 
 userRouter.post("/register", registerController);
 userRouter.post("/login", loginController);
 
-userRouter.get("/doctors", getAllDoctors);
-userRouter.get("/patient", getAllPatient);
+userRouter.get("/doctors", authMiddleware, getAllDoctors);
+userRouter.get("/patient", authMiddleware, isDoctor, getAllPatient);

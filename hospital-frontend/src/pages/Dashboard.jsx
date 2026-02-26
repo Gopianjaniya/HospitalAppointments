@@ -1,34 +1,27 @@
-import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { HospitalContext } from "../context/HospitalContext";
+import api from "../utils/api";
 
 function Dashboard() {
-  const { navigate, backendUrl } = useContext(HospitalContext);
+  const { navigate, user, logout } = useContext(HospitalContext);
   const [appointments, setAppointments] = useState([]);
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-
-    if (!storedUser) {
-      navigate("/");
-      return;
+    if (user) {
+      fetchAppointments(user);
     }
-
-    setUser(storedUser);
-    fetchAppointments(storedUser);
-  }, []);
+  }, [user]);
 
   const fetchAppointments = async (currentUser) => {
     try {
-      const res = await axios.get(`${backendUrl}/api/appointment`);
-
+      const res = await api.get("/api/appointment");
+       
       const filtered = res.data.appointments.filter((app) =>
         currentUser.role === "doctor"
-          ? app.doctor?._id === currentUser.id
-          : app.patient?._id === currentUser.id,
-      );
+      ? app.doctor?._id === (currentUser.id || currentUser._id)
+      : app.patient?._id === (currentUser.id || currentUser._id),
+    );
 
       setAppointments(filtered);
     } catch (err) {
@@ -36,11 +29,6 @@ function Dashboard() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const logout = () => {
-    localStorage.clear();
-    navigate("/");
   };
 
   if (!user) return null;

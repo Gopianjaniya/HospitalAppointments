@@ -28,15 +28,19 @@ export const registerController = async (req, res) => {
 
 // ----------- Login
 export const loginController = async (req, res) => {
+  
+  console.log("Login function called");
   try {
     const { username, password } = req.body;
+    console.log(username,password,"username,password");
+    
     const user = await userModel.findOne({ username });
     if (!user) return res.status(404).json({ message: "User not found" });
-
     const isMatch = await comparePassword(password, user.password);
     if (!isMatch) return res.status(401).json({ message: "Invalid password" });
-
-    const token = await createToken(user._id);
+ 
+    const token = await createToken(user._id);     
+    
 
     res.status(200).json({
       success: true,

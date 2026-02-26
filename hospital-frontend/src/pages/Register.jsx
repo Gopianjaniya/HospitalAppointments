@@ -16,12 +16,20 @@ function Register() {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.post(`${backendUrl}/api/user/register`, {
-        name,
-        username,
-        password,
-        role,
-      });
+      const res = await axios.post(
+        `${backendUrl}/api/user/register`,
+        {
+          name,
+          username,
+          password,
+          role,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
       if (res.data.success) {
         navigate("/");
       }

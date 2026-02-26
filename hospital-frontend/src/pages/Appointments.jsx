@@ -1,48 +1,56 @@
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import {HospitalContext}  from "../context/HospitalContext";
+import api from "../utils/api";
+import { HospitalContext } from "../context/HospitalContext";
 
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { backendUrl, navigate } = useContext(HospitalContext);
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  const fetchAppointments = async () => {
-    try {
-      const res = await axios.get(`${backendUrl}/api/appointment`);
-      // Filter based on user role and id
-      const filtered = res.data.appointments.filter((app) =>
-        user.role === "doctor"
-          ? app.doctor?._id === user.id || app.doctor?._id === user._id
-          : app.patient?._id === user.id || app.patient?._id === user._id,
-      );
-
-      setAppointments(filtered);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { navigate, user } = useContext(HospitalContext); // Use user from context
 
   useEffect(() => {
     if (!user) {
       navigate("/");
       return;
     }
-    fetchAppointments();
-  }, [backendUrl]);
 
-  const cancel = async (id) => {
+    const fetchAppointments = async () => {
+      try {
+        
+        const res = await api.get("/api/appointment");
+        
+        const filtered = res.data.appointments.filter((app) =>
+          user.role === "doctor"
+            ? app.doctor?._id === (user.id || user._id)
+            : app.patient?._id === (user.id || user._id),
+        );
+
+        setAppointments(filtered);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAppointments();
+  }, [user, navigate]);
+
+  const handleCancel = async (id) => {
     if (!window.confirm("Are you sure you want to cancel this appointment?"))
       return;
     try {
-      await axios.put(`${backendUrl}/api/appointment/cancel/${id}`);
-      fetchAppointments();
+      const res = await api.put(`/api/appointment/cancel/${id}`);
+      if (res.data.success) {
+        setAppointments(
+          appointments.map((app) =>
+            app._id === id ? { ...app, status: "Cancelled" } : app,
+          ),
+        );
+        alert("Appointment Cancelled");
+      }
     } catch (error) {
       console.error(error);
-      alert("Cancellation failed");
+      alert("Cancellation Failed");
     }
   };
 
@@ -142,7 +150,7 @@ function Appointments() {
 
                 {app.status === "booked" && (
                   <button
-                    onClick={() => cancel(app._id)}
+                    onClick={() => handleCancel(app._id)}
                     className="text-red-500 hover:bg-red-50 px-6 py-2 rounded-xl transition-all font-bold text-sm border-2 border-transparent hover:border-red-100 uppercase tracking-wide"
                   >
                     Cancel

@@ -71,17 +71,10 @@ export const appointmentCancelController = async (req, res) => {
 // ----------get Appointments
 export const getAllAppointments = async (req, res) => {
   try {
-    let appointments;
-
-    if (req.user.role === "doctor") {
-      appointments = await appointmentModel
-        .find({ doctor: req.user._id })
-        .populate("patient", "name");
-    } else if (req.user.role === "patient") {
-      appointments = await appointmentModel
-        .find({ patient: req.user._id })
-        .populate("doctor", "name");
-    }
+     const appointments = await appointmentModel
+      .find()
+      .populate("doctor", "name")
+      .populate("patient", "name");
 
     res.json({
       success: true,

@@ -1,15 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { HospitalContext } from "../context/HospitalContext";
 
 function Navbar() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const { user, logout } = useContext(HospitalContext);
   const [isOpen, setIsOpen] = useState(false);
-
-  const logout = () => {
-    localStorage.clear();
-    navigate("/");
-  };
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border border-gray-300 shadow-lg px-6 py-3">
