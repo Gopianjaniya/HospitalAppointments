@@ -33,16 +33,16 @@ export default function Patients() {
           <table className="w-0 sm:w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th className="px-6 py-3 text-left font-medium text-gray-600">
+                <th className="sm:px-6 px-5 py-3 text-left font-medium text-gray-600">
                   ID
                 </th>
-                <th className="px-6 py-3 text-left font-medium text-gray-600">
+                <th className="sm:px-6 px-5 py-3 text-left font-medium text-gray-600">
                   Name
                 </th>
-                <th className="px-6 py-3 text-left font-medium text-gray-600">
+                <th className="sm:px-6 px-5 py-3 text-left font-medium text-gray-600">
                   Username
                 </th>
-                <th className="px-6 py-3 text-left font-medium text-gray-600">
+                <th className="sm:px-6 px-5 py-3 text-left font-medium text-gray-600">
                   Status
                 </th>
               </tr>
@@ -51,12 +51,12 @@ export default function Patients() {
             <tbody className="divide-y divide-gray-200">
               {patients.map((pat, index) => (
                 <tr key={pat._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-gray-500">#{index + 1}</td>
-                  <td className="px-6 py-4 font-medium text-gray-900">
+                  <td className="sm:px-6 px-4 py-3 text-gray-500">#{index + 1}</td>
+                  <td className="sm:px-6 px-4 py-3 font-medium text-gray-900">
                     {pat.name}
                   </td>
-                  <td className="px-6 py-4 text-gray-500">@{pat.username}</td>
-                  <td className="px-6 py-4">
+                  <td className="sm:px-6 px-5 py-3 text-gray-500">@{pat.username}</td>
+                  <td className="sm:px-6 px-5 py-3">
                     <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
                       Active
                     </span>
