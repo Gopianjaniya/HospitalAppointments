@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const HospitalContext = createContext();
 
@@ -23,6 +24,7 @@ export default function HospitalContextProvider({ children }) {
     setToken("");
     setUser(null);
     localStorage.clear();
+    toast.success("Logged out successfully");
     navigate("/");
   };
 

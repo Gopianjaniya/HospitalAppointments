@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { HospitalContext } from "../context/HospitalContext";
 import api from "../utils/api";
+import toast from "react-hot-toast";
 
 function BookAppointment() {
   const [doctorId, setDoctorId] = useState("");
@@ -27,7 +28,7 @@ function BookAppointment() {
 
   const handleBook = async (e) => {
     e.preventDefault();
-    if (!doctorId || !date) return alert("Please select a doctor and date");
+    if (!doctorId || !date) return toast.error("Please select a doctor and date");
 
     setBooking(true);
     try {
@@ -38,12 +39,12 @@ function BookAppointment() {
 
        
       if (res.data.success) {
-        alert("Appointment Booked Successfully!");
+        toast.success("Appointment Booked Successfully!");
         navigate("/dashboard");
       }
     } catch (error) {
       console.error(error);
-      alert(error.response?.data?.message || "Booking Failed");
+      toast.error(error.response?.data?.message || "Booking Failed");
     } finally {
       setBooking(false);
     }

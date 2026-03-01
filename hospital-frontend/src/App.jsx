@@ -8,10 +8,12 @@ import Appointments from "./pages/Appointments";
 import BookAppointment from "./pages/BookAppointment";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <>
+      <Toaster position="top-right" reverseOrder={false} />
       <Navbar />
       <Routes>
         <Route path="/" element={<Login />} />

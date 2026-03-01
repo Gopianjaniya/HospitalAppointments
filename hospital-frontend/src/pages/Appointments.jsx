@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import api from "../utils/api";
 import { HospitalContext } from "../context/HospitalContext";
+import toast from "react-hot-toast";
 
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
@@ -35,9 +36,41 @@ function Appointments() {
     fetchAppointments();
   }, [user, navigate]);
 
-  const handleCancel = async (id) => {
-    if (!window.confirm("Are you sure you want to cancel this appointment?"))
-      return;
+  const handleCancel = (id) => {
+    toast((t) => (
+      <div className="flex flex-col gap-3">
+        <p className="text-sm font-medium text-gray-900 leading-relaxed">
+          Are you sure you want to cancel this appointment?
+        </p>
+        <div className="flex gap-2 justify-end">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="px-4 py-1.5 text-xs font-semibold text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            No
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              confirmCancel(id);
+            }}
+            className="px-4 py-1.5 text-xs font-bold text-white bg-red-500 hover:bg-red-600 rounded-lg shadow-sm transition-all"
+          >
+            Yes, Cancel
+          </button>
+        </div>
+      </div>
+    ), {
+      duration: 5000,
+      style: {
+        minWidth: "300px",
+        padding: "16px",
+        borderRadius: "16px",
+      }
+    });
+  };
+
+  const confirmCancel = async (id) => {
     try {
       const res = await api.put(`/api/appointment/cancel/${id}`);
       if (res.data.success) {
@@ -46,11 +79,11 @@ function Appointments() {
             app._id === id ? { ...app, status: "Cancelled" } : app,
           ),
         );
-        alert("Appointment Cancelled");
+        toast.success("Appointment Cancelled");
       }
     } catch (error) {
       console.error(error);
-      alert("Cancellation Failed");
+      toast.error("Cancellation Failed");
     }
   };
 

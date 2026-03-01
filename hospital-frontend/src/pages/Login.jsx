@@ -1,5 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { HospitalContext } from "../context/HospitalContext";
+import toast from "react-hot-toast";
 
 import api from "../utils/api";
 import axios from "axios";
@@ -8,28 +9,32 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const { navigate, login, backendUrl } = useContext(HospitalContext);
+  const { navigate, login, token } = useContext(HospitalContext);
+
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [token, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       const res = await api.post("/api/user/login", {
+        
         username,
         password,
       });
 
       login(res.data.token, res.data.user);
+      toast.success("Welcome back! Login successful.");
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
-      setError(
-        err.response?.data?.message ||
-          "Login failed. Please check your credentials.",
-      );
+      const msg = err.response?.data?.message || "Login failed. Please check your credentials.";
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

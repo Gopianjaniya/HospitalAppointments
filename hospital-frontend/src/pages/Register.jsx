@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { HospitalContext } from "../context/HospitalContext";
+import toast from "react-hot-toast";
 
 function Register() {
   const [name, setName] = useState("");
@@ -9,7 +10,13 @@ function Register() {
   const [role, setRole] = useState("patient");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { navigate, backendUrl } = useContext(HospitalContext);
+  const { navigate, backendUrl, token } = useContext(HospitalContext);
+
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [token, navigate]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -31,14 +38,14 @@ function Register() {
         },
       );
       if (res.data.success) {
+        toast.success("Account created successfully! Please login.");
         navigate("/");
       }
     } catch (err) {
       console.error(err);
-      setError(
-        err.response?.data?.message ||
-          "Registration failed. Try a different username.",
-      );
+      const msg = err.response?.data?.message || "Registration failed. Try a different username.";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
